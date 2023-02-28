@@ -146,7 +146,7 @@ podman system df
 
 - Сценарий "Как подключить корпоративный репозиторий?"
 ```shell
-podman logout
+podman logout {{ registry-host }}
 podman login {{ registry-host }}
 ```
 
