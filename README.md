@@ -278,24 +278,24 @@ Given
 
 When участники именуют сценарии, выполняют команды и анализируют их вывод и поведение
 ----
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть список образов?"
 ```shell
 podman image ls # TODO: собственные пометки участников для будущего использования в проектах
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как скачать образ из репы?"
 ```shell
 podman image pull {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 podman image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть историю создания образа и его описание?"
 ```shell
 podman image history {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 podman image inspect {{ registry-host }}/{{ os-images-path }}/alpine:3.14 [| jq]
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть изменения в образе и сохранить их?"
 ```shell
 podman container run --name demo -it {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 /# touch side-effect.txt
@@ -305,18 +305,18 @@ podman container commit demo {{ registry-host }}/container-training-docker/{{ re
 podman image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как повесить тэг на образ?"
 ```shell
 podman image tag {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
 podman image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как запушить образ в репу?"
 ```shell
 podman image push {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как удалить контейнер / удалить образ из репы?"
 ```shell
 podman image ls
 podman container rm demo
@@ -326,7 +326,7 @@ podman image rm {{ registry-host }}/container-training-docker/{{ registry-accoun
 podman image ls
 podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest
 podman image ls
-podman image prune --all
+podman image prune --all # 
 ```
 
 Then участники делятся проблемами и отвечают на вопросы
