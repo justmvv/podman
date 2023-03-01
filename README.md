@@ -289,29 +289,29 @@ podman image pull {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 podman image ls
 ```
 
-- Сценарий "Как посмотреть историю создания образа и его описание?"
+- Сценарий "Как посмотреть историю создания образа и его описание (слои)?"
 ```shell
 podman image history {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 podman image inspect {{ registry-host }}/{{ os-images-path }}/alpine:3.14 [| jq]
 ```
 
-- Сценарий "Как посмотреть изменения в образе и сохранить их?"
+- Сценарий "Как посмотреть изменения в контейнере и сохранить их?"
 ```shell
-podman container run --name demo -it {{ registry-host }}/{{ os-images-path }}/alpine:3.14
+podman container run --name demo -it {{ registry-host }}/{{ os-images-path }}/alpine:3.14 # run = pull + start
 /# touch side-effect.txt
 /# exit
-podman container diff demo
-podman container commit demo {{ registry-host }}/container-training-docker/{{ registry-account }}/demo
+podman container diff demo # используется нотация Git
+podman container commit demo {{ registry-host }}/container-training-docker/{{ registry-account }}/demo # фиксируем изменения и получаем новый образ
 podman image ls
 ```
 
 - Сценарий "Как повесить тэг на образ?"
 ```shell
-podman image tag {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
+podman image tag {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0 # нужно указывать целиком символьное имя
 podman image ls
 ```
 
-- Сценарий "Как запушить образ в репу?"
+- Сценарий "Как опубликовать образ в репу?"
 ```shell
 podman image push {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
 ```
@@ -319,14 +319,14 @@ podman image push {{ registry-host }}/container-training-docker/{{ registry-acco
 - Сценарий "Как удалить контейнер / удалить образ из репы?"
 ```shell
 podman image ls
-podman container rm demo
-podman image prune
+podman container rm demo # удаляем контейнер
+podman image prune  # удаляем "подвисшие" образы -> образы, которые не имеют имени и тэга 
 podman image ls
-podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
+podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0 # untag = unlink в Linux
 podman image ls
 podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest
 podman image ls
-podman image prune --all # 
+podman image prune --all # удаляем неиспользуемые(!) образы = нет запущенного контейнера и нет остановленного контейнера
 ```
 
 Then участники делятся проблемами и отвечают на вопросы
